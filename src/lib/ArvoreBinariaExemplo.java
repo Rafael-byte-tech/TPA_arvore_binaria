@@ -231,7 +231,7 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
         ArrayList<NoExemplo<T>> fila;
 
         fila = new ArrayList<>();
-        fila.add(this.raiz);
+        if (this.raiz != null ) fila.add(this.raiz);
 
         string = "[";
 
