@@ -8,11 +8,13 @@ package app;
  * programas de teste para redigir os relatórios.
  */
 
-public class Aluno  {
+public class Aluno
+{
     private int matricula;
     private String nome;
 
-    public Aluno(int matricula, String nome){
+    public Aluno(int matricula, String nome)
+    {
         this.matricula = matricula;
         this.nome = nome;        
     }
@@ -33,6 +35,4 @@ public class Aluno  {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-
 }
