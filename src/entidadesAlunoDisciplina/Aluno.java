@@ -40,4 +40,17 @@ public class Aluno
     {
         return this.arvoreDisciplinasCursadas;
     }
+
+    @Override
+    public String toString()
+    {
+        String string;
+
+        string = "INFORMAÇÕES DO ALUNO\n";
+        string += "MATRÍCULA:   " + getMatricula() + "\n" + "NOME:   " + getNome() + "\n\n";
+        string += "DISCIPLINAS CURSADAS POR " + getNome() + "\n";
+        string += this.arvoreDisciplinasCursadas.caminharEmOrdem();
+
+        return string;
+    }
 }

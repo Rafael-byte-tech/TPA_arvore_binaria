@@ -14,7 +14,7 @@ public class Disciplina
         this.codigo = codigo;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
-        this.requisitos = new ArrayList<>();
+        this.requisitos = new ArrayList<Disciplina>();
     }
 
     public int getCodigo()
@@ -35,5 +35,11 @@ public class Disciplina
     public ArrayList<Disciplina> getRequisitos()
     {
         return this.requisitos;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "CODIGO: " + getCodigo() + "     \n" + "NOME:    " + getNome() + "\n\n";
     }
 }

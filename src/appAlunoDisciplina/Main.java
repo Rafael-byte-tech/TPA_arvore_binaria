@@ -10,6 +10,6 @@ public class Main
 
         control = new Control();
 
-        new FormAluno(control);
+        new Hub(control);
     }
 }

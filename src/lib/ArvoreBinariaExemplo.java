@@ -71,8 +71,8 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
         /*Não mais para onde navegar. Retorna nulo.*/
         if (no == null) return null;
 
-        /*Se valor for maior que nó atual, retorna o valor.*/
-        else if (this.comparador.compare(valor, no.getValor()) == 0) return valor;
+        /*Se valor for igual ao nó atual, retorna o valor.*/
+        else if (this.comparador.compare(valor, no.getValor()) == 0) return no.getValor();
 
         /*Se valor for menor que nó atual, navega para a esquerda*/
         else if (this.comparador.compare(valor, no.getValor()) < 0) return pesquisar(valor, no.getFilhoEsquerda());
@@ -100,7 +100,7 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
 
         /*Nó atual não existe ou possui o valor buscado.*/
         if (no == null) return null;
-        else if (comparador.compare(valor, no.getValor()) == 0) return valor;
+        else if (comparador.compare(valor, no.getValor()) == 0) return no.getValor();
 
         /*Busca na subárvore esquerda até achar o valor buscado ou não tiver mais nós para navegar*/
         valorCorrente = pesquisar(valor, no.getFilhoEsquerda(), comparador);
@@ -114,54 +114,81 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
     @Override
     public T remover(T valor)
     {
-        NoExemplo<T> no;
+        try
+        {
+            this.raiz = remover(valor, this.raiz);
+        }
+        catch (NullPointerException exception)
+        {
+            return null;
+        }
 
-        no = remover(valor, this.raiz);
-
-        if (no == null) return null;
-        else return no.getValor();
+        return valor;
     }
 
-    /**
-     * Função navega árvore de forma binária e remove nó se ele tiver o valor dado como parâmetro.
-     * @param valor valor do nó a ser excluído.
-     * @param no nó a partir do qual a função navegará a árvore.
-     * @return nó excluído caso seja encontrado. Se não, retorna null.*/
-    private NoExemplo<T> remover(T valor, NoExemplo<T> no)
+    private NoExemplo<T> remover(T valor, NoExemplo<T> navi) throws NullPointerException
     {
-        NoExemplo<T> maiorDaEsquerda;
+        if (this.comparador.compare(valor, navi.getValor()) < 0)
+        {
+            NoExemplo<T> subArvoreEsquerda;
+            subArvoreEsquerda = remover(valor, navi.getFilhoEsquerda());
+            navi.setFilhoEsquerda(subArvoreEsquerda);
+        }
 
-        /*Não há para onde navegar, retorna nulo.*/
-        if (no == null) return null;
+        else if (this.comparador.compare(valor, navi.getValor()) > 0)
+        {
+            NoExemplo<T> subArvoreDireita;
+            subArvoreDireita = remover(valor, navi.getFilhoDireita());
+            navi.setFilhoDireita(subArvoreDireita);
+        }
 
-        /*Se valor é menor que o valor do nó, navega para a esquerda. Se é maior, navega para a direita.*/
-        else if (this.comparador.compare(valor, no.getValor()) < 0) no.setFilhoEsquerda(remover(valor, no.getFilhoEsquerda()));
-        else if (this.comparador.compare(valor, no.getValor()) > 0) no.setFilhoDireita(remover(valor, no.getFilhoDireita()));
-
-        /*Nó possui o valor buscado. Inicia remoção.*/
         else
         {
-            /*Nó não tem filhos. será apenas desreferenciado.*/
-            if (no.getFilhoEsquerda() == null && no.getFilhoDireita() == null) no = null;
+            /*Sem filhos*/
+            if (navi.getFilhoEsquerda() == null && navi.getFilhoDireita() == null)
+            {
+                return null;
+            }
 
-            /*Nó só tem filho direito, referencia filho direito. Ou nó só tem filho esquerdo, referencia filho esquerdo.*/
-            else if (no.getFilhoEsquerda() == null) no = no.getFilhoDireita();
-            else if (no.getFilhoDireita() == null) no = no.getFilhoEsquerda();
+            /*Só subÁrvore esquerda*/
+            else if (navi.getFilhoDireita() == null)
+            {
+                return navi.getFilhoEsquerda();
+            }
 
-            /*Nó tem ambos filhos esquerdo e direito.*/
+            /*Só subÁrvore direita*/
+            else if (navi.getFilhoEsquerda() == null)
+            {
+                return navi.getFilhoDireita();
+            }
+
+            /*SubÁrvores esquerda e direita*/
             else
             {
-                /*Busca a maior folha à esquerda do nó a ser removido.*/
-                maiorDaEsquerda = no.getFilhoEsquerda();
-                while (maiorDaEsquerda.getFilhoDireita() != null) maiorDaEsquerda = maiorDaEsquerda.getFilhoDireita();
+                /*Buscar maior nodo da subÁrvore esquerda*/
+                NoExemplo<T> substitute;
+                T temp;
 
-                /*Troca os valores entre o nó e a maior folha à esquerda. Por fim exclui a folha.*/
-                no.setValor(maiorDaEsquerda.getValor());
-                maiorDaEsquerda.setValor(valor);
-                no.setFilhoEsquerda(remover(valor, no.getFilhoEsquerda()));
+                substitute = navi.getFilhoEsquerda();
+
+                while (substitute.getFilhoDireita() != null)
+                {
+                    substitute = substitute.getFilhoDireita();
+                }
+
+                /*Substituir valor a remover por valor do substituto*/
+                temp = navi.getValor();
+                navi.setValor(substitute.getValor());
+                substitute.setValor(temp);
+
+                /*Remover valor*/
+                NoExemplo<T> subArvoreEsquerda;
+                subArvoreEsquerda = remover(valor, navi.getFilhoEsquerda());
+                navi.setFilhoEsquerda(subArvoreEsquerda);
             }
         }
-        return no;
+
+        return navi;
     }
 
     @Override

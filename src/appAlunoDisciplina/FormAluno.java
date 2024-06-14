@@ -7,69 +7,72 @@ import controlAlunoDisciplina.Control;
 
 public class FormAluno extends JFrame implements ActionListener
 {
-    private Control control;
+    private final Control control;
 
-    private Container container;
-    private JLabel labelTitle;
-    private JLabel labelName;
-    private JTextField textFieldName;
-    private JLabel labelEnroll;
-    private JTextField textFieldEnroll;
-    private JButton buttonSave;
+    private final Container container;
+    private final JLabel labelTitle;
+    private final JLabel labelName;
+    private final JTextField textFieldName;
+    private final JLabel labelEnroll;
+    private final JTextField textFieldEnroll;
+    private final JButton buttonSave;
 
     public FormAluno(Control control)
     {
         this.control = control;
 
-        setTitle("Formulário de Alunos");
+        setTitle("Formulário de Aluno");
         setBounds(300, 90, 900, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         this.container = getContentPane();
         this.container.setLayout(null);
 
-        this.labelTitle = new JLabel("Formulário de Alunos.");
-        this.labelTitle.setFont(new Font("Arial", Font.PLAIN, 30));
+        this.labelTitle = new JLabel("Cadastro de Aluno");
+        this.labelTitle.setFont(new Font("Arial", Font.PLAIN, 27));
+        this.labelTitle.setForeground(Color.BLACK);
         this.labelTitle.setSize(300, 30);
-        this.labelTitle.setLocation(300, 30);
+        this.labelTitle.setLocation(330, 100);
         this.container.add(this.labelTitle);
 
         this.labelName = new JLabel("Nome");
-        this.labelName.setFont(new Font("Arial", Font.PLAIN, 20));
-        this.labelName.setSize(100, 20);
-        this.labelName.setLocation(100, 100);
+        this.labelName.setFont(new Font("Arial", Font.PLAIN, 24));
+        this.labelName.setSize(100, 24);
+        this.labelName.setLocation(300, 200);
         this.container.add(labelName);
 
         this.textFieldName = new JTextField();
         this.textFieldName.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.textFieldName.setSize(190, 20);
-        this.textFieldName.setLocation(200, 100);
+        this.textFieldName.setSize(180, 24);
+        this.textFieldName.setLocation(420, 200);
         this.container.add(this.textFieldName);
 
         this.labelEnroll = new JLabel("Matrícula");
-        this.labelEnroll.setFont(new Font("arial", Font.PLAIN, 20));
-        this.labelEnroll.setSize(100, 20);
-        this.labelEnroll.setLocation(100, 150);
+        this.labelEnroll.setFont(new Font("arial", Font.PLAIN, 24));
+        this.labelEnroll.setSize(100, 24);
+        this.labelEnroll.setLocation(300, 250);
         this.container.add(this.labelEnroll);
 
         this.textFieldEnroll = new JTextField();
         this.textFieldEnroll.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.textFieldEnroll.setSize(150, 20);
-        this.textFieldEnroll.setLocation(200, 150);
+        this.textFieldEnroll.setSize(180, 24);
+        this.textFieldEnroll.setLocation(420, 250);
         this.container.add(this.textFieldEnroll);
 
         this.buttonSave = new JButton("Salvar");
-        this.buttonSave.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.buttonSave.setSize(100, 20);
-        this.buttonSave.setLocation(150, 450);
+        this.buttonSave.setFont(new Font("Arial", Font.PLAIN, 18));
+        this.buttonSave.setBackground(Color.BLACK);
+        this.buttonSave.setForeground(Color.WHITE);
+        this.buttonSave.setSize(150, 45);
+        this.buttonSave.setLocation(360, 400);
         this.buttonSave.addActionListener(this);
         this.container.add(this.buttonSave);
 
         setVisible(true);
     }
 
-    public void enroll() throws NumberFormatException
+    private void enroll() throws NumberFormatException
     {
         int matricula;
         String nome;
@@ -87,9 +90,6 @@ public class FormAluno extends JFrame implements ActionListener
 
     public void actionPerformed(ActionEvent e)
     {
-        int matricula;
-        String nome;
-
         try
         {
             enroll();
