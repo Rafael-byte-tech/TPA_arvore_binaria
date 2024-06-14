@@ -34,7 +34,7 @@ public class Hub extends JFrame implements ActionListener
         this.labelTitle.setFont(new Font("Arial", Font.PLAIN, 27));
         this.labelTitle.setForeground(Color.BLACK);
         this.labelTitle.setSize(500, 60);
-        this.labelTitle.setLocation(270, 30);
+        this.labelTitle.setLocation(270, 50);
         this.container.add(this.labelTitle);
 
         this.buttonFormAluno = new JButton("Cadastrar Aluno");

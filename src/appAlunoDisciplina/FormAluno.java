@@ -38,25 +38,25 @@ public class FormAluno extends JFrame implements ActionListener
 
         this.labelName = new JLabel("Nome");
         this.labelName.setFont(new Font("Arial", Font.PLAIN, 24));
-        this.labelName.setSize(100, 24);
+        this.labelName.setSize(100, 25);
         this.labelName.setLocation(300, 200);
         this.container.add(labelName);
 
         this.textFieldName = new JTextField();
         this.textFieldName.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.textFieldName.setSize(180, 24);
+        this.textFieldName.setSize(180, 25);
         this.textFieldName.setLocation(420, 200);
         this.container.add(this.textFieldName);
 
         this.labelEnroll = new JLabel("Matrícula");
         this.labelEnroll.setFont(new Font("arial", Font.PLAIN, 24));
-        this.labelEnroll.setSize(100, 24);
+        this.labelEnroll.setSize(100, 25);
         this.labelEnroll.setLocation(300, 250);
         this.container.add(this.labelEnroll);
 
         this.textFieldEnroll = new JTextField();
         this.textFieldEnroll.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.textFieldEnroll.setSize(180, 24);
+        this.textFieldEnroll.setSize(180, 25);
         this.textFieldEnroll.setLocation(420, 250);
         this.container.add(this.textFieldEnroll);
 

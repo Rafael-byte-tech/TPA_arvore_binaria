@@ -24,59 +24,62 @@ public class FormDisciplina extends JFrame implements ActionListener
         this.control = control;
 
         setTitle("Formulário de Disciplinas");
-        setBounds(300, 90, 800, 500);
+        setBounds(300, 90, 900, 600);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         this.container = this.getContentPane();
         this.container.setLayout(null);
 
-        this.labelTitle = new JLabel("Formulário de Disciplinas");
-        this.labelTitle.setFont(new Font("Arial", Font.PLAIN, 30));
+        this.labelTitle = new JLabel("Registro de Disciplina");
+        this.labelTitle.setFont(new Font("Arial", Font.PLAIN, 27));
+        this.labelTitle.setForeground(Color.BLACK);
         this.labelTitle.setSize(400, 30);
-        this.labelTitle.setLocation(200, 30);
+        this.labelTitle.setLocation(330, 100);
         this.container.add(this.labelTitle);
 
         this.labelName = new JLabel("Nome");
-        this.labelName.setFont(new Font("Arial", Font.PLAIN, 20));
-        this.labelName.setSize(100, 20);
-        this.labelName.setLocation(100, 100);
+        this.labelName.setFont(new Font("Arial", Font.PLAIN, 24));
+        this.labelName.setSize(100, 25);
+        this.labelName.setLocation(300, 200);
         this.container.add(labelName);
 
         this.textFieldName = new JTextField();
         this.textFieldName.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.textFieldName.setSize(190, 20);
-        this.textFieldName.setLocation(200, 100);
+        this.textFieldName.setSize(180, 24);
+        this.textFieldName.setLocation(420, 200);
         this.container.add(this.textFieldName);
 
         this.labelCode = new JLabel("Código");
-        this.labelCode.setFont(new Font("Arial", Font.PLAIN, 20));
-        this.labelCode.setSize(100, 20);
-        this.labelCode.setLocation(100, 150);
+        this.labelCode.setFont(new Font("Arial", Font.PLAIN, 24));
+        this.labelCode.setSize(110, 25);
+        this.labelCode.setLocation(290, 250);
         this.container.add(this.labelCode);
 
         this.textFieldCode = new JTextField();
         this.textFieldCode.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.textFieldCode.setSize(150, 20);
-        this.textFieldCode.setLocation(200, 150);
+        this.textFieldCode.setSize(180, 25);
+        this.textFieldCode.setLocation(420, 250);
         this.container.add(this.textFieldCode);
 
         this.labelWorkload = new JLabel("Carga Hora");
-        this.labelWorkload.setFont(new Font("Arial", Font.PLAIN, 18));
-        this.labelWorkload.setSize(100, 25);
-        this.labelWorkload.setLocation(100, 200);
+        this.labelWorkload.setFont(new Font("Arial", Font.PLAIN, 24));
+        this.labelWorkload.setSize(140, 25);
+        this.labelWorkload.setLocation(260, 300);
         this.container.add(this.labelWorkload);
 
         this.textFieldWorkload = new JTextField();
         this.textFieldWorkload.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.textFieldWorkload.setSize(150, 25);
-        this.textFieldWorkload.setLocation(200, 200);
+        this.textFieldWorkload.setSize(180, 25);
+        this.textFieldWorkload.setLocation(420, 300);
         this.container.add(this.textFieldWorkload);
 
         this.buttonSave = new JButton("Salvar");
-        this.buttonSave.setFont(new Font("Arial", Font.PLAIN, 15));
-        this.buttonSave.setSize(100, 30);
-        this.buttonSave.setLocation(300, 300);
+        this.buttonSave.setFont(new Font("Arial", Font.PLAIN, 18));
+        this.buttonSave.setBackground(Color.BLACK);
+        this.buttonSave.setForeground(Color.WHITE);
+        this.buttonSave.setSize(150, 45);
+        this.buttonSave.setLocation(360, 400);
         this.buttonSave.addActionListener(this);
         this.container.add(this.buttonSave);
 

@@ -40,6 +40,6 @@ public class Disciplina
     @Override
     public String toString()
     {
-        return "CODIGO: " + getCodigo() + "     \n" + "NOME:    " + getNome() + "\n\n";
+        return "CODIGO: " + getCodigo() + "     \n" + "NOME:    " + getNome();
     }
 }

@@ -12,6 +12,7 @@ public class FormPreRequisito extends JFrame implements ActionListener
 
     private Container container;
     private JLabel labelTitle;
+    private JLabel labelExplain;
     private JLabel labelRequisiteCode;
     private JTextField textFieldRequisiteCode;
     private JLabel labelDependentCode;
@@ -23,47 +24,57 @@ public class FormPreRequisito extends JFrame implements ActionListener
         this.control = control;
 
         setTitle("Formulário de Pré-requisitos");
-        setBounds(300, 90, 800, 500);
+        setBounds(300, 90, 900, 600);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         this.container = this.getContentPane();
         this.container.setLayout(null);
 
-        this.labelTitle = new JLabel("Formulário de Pré-requisitos");
-        this.labelTitle.setFont(new Font("Arial", Font.PLAIN, 24));
-        this.labelTitle.setSize(400, 20);
-        this.labelTitle.setLocation(220, 30);
+        this.labelTitle = new JLabel("Pré-Requisitos de Disciplinas");
+        this.labelTitle.setFont(new Font("Arial", Font.PLAIN, 27));
+        this.labelTitle.setForeground(Color.BLACK);
+        this.labelTitle.setSize(400, 30);
+        this.labelTitle.setLocation(300, 100);
         this.container.add(this.labelTitle);
 
-        this.labelRequisiteCode = new JLabel("Req code");
-        this.labelRequisiteCode.setFont(new Font("Arial", Font.PLAIN, 18));
+        this.labelExplain = new JLabel("Insira os códigos das Disciplinas");
+        this.labelExplain.setFont(new Font("Arial", Font.PLAIN, 14));
+        this.labelExplain.setForeground(Color.BLACK);
+        this.labelExplain.setSize(240, 24);
+        this.labelExplain.setLocation(360, 150);
+        this.container.add(this.labelExplain);
+
+        this.labelRequisiteCode = new JLabel("Requisito");
+        this.labelRequisiteCode.setFont(new Font("Arial", Font.PLAIN, 24));
         this.labelRequisiteCode.setSize(100, 25);
-        this.labelRequisiteCode.setLocation(100, 100);
+        this.labelRequisiteCode.setLocation(300, 200);
         this.container.add(this.labelRequisiteCode);
 
         this.textFieldRequisiteCode = new JTextField();
         this.textFieldRequisiteCode.setFont(new Font("Arial", Font.PLAIN, 18));
-        this.textFieldRequisiteCode.setSize(150, 25);
-        this.textFieldRequisiteCode.setLocation(200, 100);
+        this.textFieldRequisiteCode.setSize(180, 25);
+        this.textFieldRequisiteCode.setLocation(420, 200);
         this.container.add(this.textFieldRequisiteCode);
 
-        this.labelDependentCode = new JLabel("Dep code");
-        this.labelDependentCode.setFont(new Font("Arial", Font.PLAIN, 18));
-        this.labelDependentCode.setSize(100, 25);
-        this.labelDependentCode.setLocation(100, 150);
+        this.labelDependentCode = new JLabel("Dependente");
+        this.labelDependentCode.setFont(new Font("Arial", Font.PLAIN, 24));
+        this.labelDependentCode.setSize(140, 25);
+        this.labelDependentCode.setLocation(260, 250);
         this.container.add(this.labelDependentCode);
 
         this.textFieldDependentCode = new JTextField();
         this.textFieldDependentCode.setFont(new Font("Arial", Font.PLAIN, 18));
-        this.textFieldDependentCode.setSize(150, 25);
-        this.textFieldDependentCode.setLocation(200, 150);
+        this.textFieldDependentCode.setSize(180, 25);
+        this.textFieldDependentCode.setLocation(420, 250);
         this.container.add(this.textFieldDependentCode);
 
         this.buttonSave = new JButton("Salvar");
         this.buttonSave.setFont(new Font("Arial", Font.PLAIN, 18));
-        this.buttonSave.setSize(100, 30);
-        this.buttonSave.setLocation(300, 300);
+        this.buttonSave.setBackground(Color.BLACK);
+        this.buttonSave.setForeground(Color.WHITE);
+        this.buttonSave.setSize(190, 45);
+        this.buttonSave.setLocation(360, 400);
         this.buttonSave.addActionListener(this);
         this.container.add(this.buttonSave);
 
