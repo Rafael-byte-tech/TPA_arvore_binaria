@@ -26,32 +26,46 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
     @Override
     public void adicionar(T novoValor)
     {
-        if (this.raiz == null) this.raiz = new NoExemplo<T>(novoValor);
-        else adicionar(novoValor, this.raiz);
+        if (this.raiz == null) this.raiz = new NoExemplo<>(novoValor);
+        else this.raiz = adicionar(novoValor, this.raiz);
     }
 
     /**
      *  <p>Forma recursiva do método adicionar. Comparando o nó e o valor dados como parâmetros, navega os descendentes do nó comparando-os
      *  até o local correto para alojar o novo valor.
      *  </p>
-     * @param novoValor valor a ser adicionado na árvore.
-     * @param no nó a partir do qual a navegação começará.
+     * @param valor, valor a ser adicionado na árvore.
+     * @param navi nó daonde a navegação começará.
      * */
-    private void adicionar(T novoValor, NoExemplo<T> no)
+    protected NoExemplo<T> adicionar(T valor, NoExemplo<T> navi)
     {
+        NoExemplo<T> esquerdo;
+        NoExemplo<T> direito;
+
         /*Verifica se novo valor é menor ou maior que o nó*/
-        if (this.comparador.compare(novoValor, no.getValor()) < 0)
+        if (this.comparador.compare(valor, navi.getValor()) < 0)
         {
             /*Se o nó está sem filho esquerdo, novo valor é adicionado nesse local. Se não, navega para a esquerda.*/
-            if (no.getFilhoEsquerda() == null) no.setFilhoEsquerda(new NoExemplo<T>(novoValor));
-            else adicionar(novoValor, no.getFilhoEsquerda());
+            if (navi.getFilhoEsquerda() == null) navi.setFilhoEsquerda(new NoExemplo<>(valor));
+            else
+            {
+                esquerdo = adicionar(valor, navi.getFilhoEsquerda());
+                navi.setFilhoEsquerda(esquerdo);
+            }
         }
-        else if (this.comparador.compare(novoValor, no.getValor()) > 0)
+
+        else if (this.comparador.compare(valor, navi.getValor()) > 0)
         {
             /*Se o nó está sem filho direito, novo valor é adicionado nesse local. Se não, navega para a direita.*/
-            if (no.getFilhoDireita() == null) no.setFilhoDireita(new NoExemplo<T>(novoValor));
-            else adicionar(novoValor, no.getFilhoDireita());
+            if (navi.getFilhoDireita() == null) navi.setFilhoDireita(new NoExemplo<>(valor));
+            else
+            {
+                direito = adicionar(valor, navi.getFilhoDireita());
+                navi.setFilhoDireita(direito);
+            }
         }
+
+        return navi;
     }
 
     @Override
@@ -61,24 +75,24 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
     }
 
     /**
-     * Pesquisa com o comparador indexado. Se o valor de parâmetro for menor que o nó, busca na subárvore esquerda, se maior busca na direita.
+     * Pesquisa recursiva com o comparador indexado. Se o valor de parâmetro for menor que o nó, busca na subárvore esquerda, se maior busca na direita.
      * @param valor, valor a ser pesquisado.
-     * @param no, nó a ser verificado.
-     * @return se o valor for encontrado, retorna valor tipo T se não retorna null.
+     * @param navi, nodo de navegação.
+     * @return se o valor for encontrado, retorna valor tipo T, se não retorna null.
      */
-    private T pesquisar(T valor, NoExemplo<T> no)
+    private T pesquisar(T valor, NoExemplo<T> navi)
     {
         /*Não mais para onde navegar. Retorna nulo.*/
-        if (no == null) return null;
+        if (navi == null) return null;
 
         /*Se valor for igual ao nó atual, retorna o valor.*/
-        else if (this.comparador.compare(valor, no.getValor()) == 0) return no.getValor();
+        else if (this.comparador.compare(valor, navi.getValor()) == 0) return navi.getValor();
 
         /*Se valor for menor que nó atual, navega para a esquerda*/
-        else if (this.comparador.compare(valor, no.getValor()) < 0) return pesquisar(valor, no.getFilhoEsquerda());
+        else if (this.comparador.compare(valor, navi.getValor()) < 0) return pesquisar(valor, navi.getFilhoEsquerda());
 
         /*Por exclusão, se valor for maior que o nó atual, navega para a direita.*/
-        else return pesquisar(valor, no.getFilhoDireita());
+        else return pesquisar(valor, navi.getFilhoDireita());
     }
 
    @Override
@@ -88,36 +102,42 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
    }
 
    /**
-    * Pesquisa sem o comparador indexado. Varre toda a árvore em busca de um nó com valor igual ao passado como parâmetro. No pior caso varre todos os nós.
-    * @param valor valor pesquisado
-    * @param no nó atualmente sendo verificado pela função
+    * Pesquisa recursiva sem o comparador indexado. Varre toda a árvore em busca de um nó com valor igual ao passado como parâmetro. No pior caso varre todos os nós.
+    * @param valor valor pesquisado.
+    * @param navi nodo de navegação.
     * @param comparador externo. Seu parâmetro de comparação pode ser diferente do de indexação da árvore.
     * @return valor do tipo T se encontrado. Se não, retorna null.
     * */
-    private T pesquisar(T valor, NoExemplo<T> no, Comparator comparador)
+    private T pesquisar(T valor, NoExemplo<T> navi, Comparator comparador)
     {
         T valorCorrente;
 
         /*Nó atual não existe ou possui o valor buscado.*/
-        if (no == null) return null;
-        else if (comparador.compare(valor, no.getValor()) == 0) return no.getValor();
+        if (navi == null) return null;
+        else if (comparador.compare(valor, navi.getValor()) == 0) return navi.getValor();
 
         /*Busca na subárvore esquerda até achar o valor buscado ou não tiver mais nós para navegar*/
-        valorCorrente = pesquisar(valor, no.getFilhoEsquerda(), comparador);
+        valorCorrente = pesquisar(valor, navi.getFilhoEsquerda(), comparador);
         if (valorCorrente != null) return valorCorrente;
 
         /*Busca na subárvore direita até achar o valor buscado ou não tiver mais nós para navegar.*/
-        valorCorrente = pesquisar(valor, no.getFilhoDireita(), comparador);
+        valorCorrente = pesquisar(valor, navi.getFilhoDireita(), comparador);
         return valorCorrente;
     }
 
+    /**
+     * Remove nodo com o valor buscado.
+     * @param valor valor buscado.
+     * @return valor do tipo T se encontrado. Se não, retorna null.
+     * */
     @Override
     public T remover(T valor)
     {
         try
         {
-            this.raiz = remover(valor, this.raiz);
+            this.raiz = this.remover(valor, this.raiz);
         }
+
         catch (NullPointerException exception)
         {
             return null;
@@ -126,41 +146,40 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
         return valor;
     }
 
-    private NoExemplo<T> remover(T valor, NoExemplo<T> navi) throws NullPointerException
+    /**
+     * Método de remoção de nodo com navegação recursiva.
+     * @param valor, valor a remover.
+     * @param navi, nodo de navegação.
+     * @return nodo da chamada recursiva. Se tiver valor a ser excluído retornará null.*/
+    protected NoExemplo<T> remover(T valor, NoExemplo<T> navi) throws NullPointerException
     {
+        /*Navega árvore*/
         if (this.comparador.compare(valor, navi.getValor()) < 0)
         {
             NoExemplo<T> subArvoreEsquerda;
-            subArvoreEsquerda = remover(valor, navi.getFilhoEsquerda());
-            navi.setFilhoEsquerda(subArvoreEsquerda);
+            subArvoreEsquerda = this.remover(valor, navi.getFilhoEsquerda());
+            navi.setFilhoEsquerda(subArvoreEsquerda);   /*Navega subárvore esquerda*/
         }
 
         else if (this.comparador.compare(valor, navi.getValor()) > 0)
         {
             NoExemplo<T> subArvoreDireita;
-            subArvoreDireita = remover(valor, navi.getFilhoDireita());
-            navi.setFilhoDireita(subArvoreDireita);
+            subArvoreDireita = this.remover(valor, navi.getFilhoDireita());
+            navi.setFilhoDireita(subArvoreDireita); /*Navega subárvore direita*/
         }
 
+        /*Exclui nodo buscado*/
         else
         {
             /*Sem filhos*/
-            if (navi.getFilhoEsquerda() == null && navi.getFilhoDireita() == null)
-            {
-                return null;
-            }
+            if (navi.getFilhoEsquerda() == null && navi.getFilhoDireita() == null) navi = null;
 
             /*Só subÁrvore esquerda*/
-            else if (navi.getFilhoDireita() == null)
-            {
-                return navi.getFilhoEsquerda();
-            }
+            else if (navi.getFilhoDireita() == null) navi = navi.getFilhoEsquerda();
+
 
             /*Só subÁrvore direita*/
-            else if (navi.getFilhoEsquerda() == null)
-            {
-                return navi.getFilhoDireita();
-            }
+            else if (navi.getFilhoEsquerda() == null) navi = navi.getFilhoDireita();
 
             /*SubÁrvores esquerda e direita*/
             else
@@ -171,10 +190,8 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
 
                 substitute = navi.getFilhoEsquerda();
 
-                while (substitute.getFilhoDireita() != null)
-                {
-                    substitute = substitute.getFilhoDireita();
-                }
+                while (substitute.getFilhoDireita() != null) substitute = substitute.getFilhoDireita();
+
 
                 /*Substituir valor a remover por valor do substituto*/
                 temp = navi.getValor();
@@ -188,7 +205,7 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
             }
         }
 
-        return navi;
+        return navi;    /*Retorna navegador para a chamada recursiva*/
     }
 
     @Override
@@ -199,20 +216,20 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
 
     /**
      * Método soma a altura das subárvores recursivamente até chegar à raiz.
-     * @param no nó a partir do qual será medida a altura.
+     * @param nodo nó a partir do qual será medida a altura.
      * @return inteiro indicando a altura da árvore. Caso a raiz seja nula, retorna -1.
      * */
-    private int altura(NoExemplo<T> no)
+    protected int altura(NoExemplo<T> nodo)
     {
         /*Alturas da subárvores esquerda e direita tendo como referência o nó dado como parâmetro.*/
         int alturaEsquerda, alturaDireita;
 
-        if (no == null) return -1;  /*Retorno para árvore sem raiz.*/
-        else if (no.getFilhoDireita() == null && no.getFilhoEsquerda() == null) return 0;   /*Retorno para folhas*/
+        if (nodo == null) return -1;  /*Retorno para árvore sem raiz.*/
+        else if (nodo.getFilhoDireita() == null && nodo.getFilhoEsquerda() == null) return 0;   /*Retorno para folhas*/
 
         /*Somatórios das alturas das subárvores esquerda e direita*/
-        alturaEsquerda = altura(no.getFilhoEsquerda());
-        alturaDireita = altura(no.getFilhoDireita());
+        alturaEsquerda = altura(nodo.getFilhoEsquerda());
+        alturaDireita = altura(nodo.getFilhoDireita());
 
         /*Retorno da altura da árvore. Altura da maior subárvore mais a altura da raiz*/
         if (alturaEsquerda > alturaDireita) return alturaEsquerda + 1;
@@ -231,23 +248,19 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
      *  A função acaba quando a chamada recursiva retorna à raiz, que adiciona si mesma ao somatório
      * </p>
      * */
-    private int quantidadeNos(NoExemplo<T> no)
+    private int quantidadeNos(NoExemplo<T> nodo)
     {
         /*Somatórios da quantidade de descendentes das subárvores esquerda e direita*/
         int esquerda, direita;
 
-        /*Inicialização das variáveis*/
-        esquerda = 0;
-        direita = 0;
-
-        /*Retorna 0 cajo não haja nó*/
-        if (no == null) return 0;
+        /*Retorna 0 caso não haja nó*/
+        if (nodo == null) return 0;
 
         /*Chamadas recursivas das subárvores esquerda e direita.*/
-        esquerda = quantidadeNos(no.getFilhoEsquerda());
-        direita = quantidadeNos(no.getFilhoDireita());
+        esquerda = quantidadeNos(nodo.getFilhoEsquerda());
+        direita = quantidadeNos(nodo.getFilhoDireita());
 
-        /*retorna a quantidade de nós das subárvores mais o nó de origem.*/
+        /*Retorna a quantidade de nós das subárvores mais o nó de origem.*/
         return esquerda + direita + 1;
     }
 
@@ -314,20 +327,20 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T>
 
     /**
      * Percorre a árvore em ordem concatenando uma string com os valores dos nós.
-     * @param no nó por onde começará a navegação.
+     * @param navi, nó por onde começará a navegação.
      * @return string contendo os valores dos nós percorridos.
      */
-    private String caminharEmOrdem(NoExemplo<T> no)
+    private String caminharEmOrdem(NoExemplo<T> navi)
     {
         String string;
 
         string = "";
 
-        if (no != null)
+        if (navi != null)
         {
-            string += caminharEmOrdem(no.getFilhoEsquerda());   /*Concatena valor dos nós a esquerda.*/
-            string += " \n " + no.getValor().toString();        /*Concatena valor do nó passado como parâmetro.*/
-            string += caminharEmOrdem(no.getFilhoDireita());    /*Concatena valor dos nós a direita.*/
+            string += caminharEmOrdem(navi.getFilhoEsquerda());   /*Concatena valor dos nós a esquerda.*/
+            string += " \n " + navi.getValor().toString();        /*Concatena valor do nó passado como parâmetro.*/
+            string += caminharEmOrdem(navi.getFilhoDireita());    /*Concatena valor dos nós a direita.*/
         }
 
         return string;

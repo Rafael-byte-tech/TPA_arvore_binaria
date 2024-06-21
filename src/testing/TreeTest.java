@@ -1,38 +1,29 @@
 package testing;
 
+import app.Aluno;
+import lib.ArvoreAVLExemplo;
 import lib.ArvoreBinariaExemplo;
-
-import java.util.Comparator;
 
 public class TreeTest
 {
     public static void treeTest()
     {
-        ArvoreBinariaExemplo<Integer> tree;
+        ArvoreAVLExemplo<Integer> tree;
 
-        tree = new ArvoreBinariaExemplo<>(new ComparatorInteger());
+        tree = new ArvoreAVLExemplo<Integer>(new ComparatorInteger());
 
-        tree.adicionar(9);
-        tree.adicionar(3);
-        tree.adicionar(36);
-        tree.adicionar(1);
-        tree.adicionar(6);
-        tree.adicionar(27);
-        tree.adicionar(39);
-        tree.adicionar(42);
+        for(int i=0; i<10; i++)
+        {
+            tree.adicionar(i);
+        }
 
-        System.out.println(tree.caminharEmNivel());
+        System.out.println("AVL:\n" + tree.caminharEmNivel() + "\nHeight = " + tree.altura());
 
-        tree.remover(9);
+        System.out.println("\nRemoção\n");
 
-        System.out.println(tree.caminharEmNivel());
+        tree.remover(0);
+        tree.remover(2);
 
-        tree.remover(36);
-
-        System.out.println(tree.caminharEmNivel());
-
-        tree.remover(27);
-
-        System.out.println(tree.caminharEmNivel());
+        System.out.println("AVL:\n" + tree.caminharEmNivel() + "\nHeight = " + tree.altura());
     }
 }
